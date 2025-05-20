@@ -7,7 +7,6 @@ local M = {}
 M.name = "Amazon Q"
 
 M._chunks = {}
-local raw_chunks = {}
 
 M.get_current_output = function()
 	return table.concat(M._chunks, "")
@@ -33,22 +32,13 @@ M.send_to_model = function(chat_history, on_stdout_chunk, on_complete)
 	-- Format messages for Amazon Q CLI
 	local messages_json = vim.json.encode(chat_history.messages)
 
-	-- Build the command to execute
-	local command = string.format("q chat --no-interactive '%s'", messages_json)
-
-	-- Add model parameters if available
-	if chat_history.params then
-		-- Convert params to CLI arguments if needed
-		-- This would need to be adapted based on Amazon Q CLI's parameter format
-	end
-
 	chunks = {}
-	raw_chunks = {}
 
 	-- Execute the Amazon Q CLI command
-	utils.exec("bash", {
-		"-c",
-		command,
+	utils.exec("q", {
+		"chat",
+		"--no-interactive",
+		messages_json,
 	}, function(chunk)
 		M._recieve_chunk(chunk, on_stdout_chunk)
 	end, function(err, _)
