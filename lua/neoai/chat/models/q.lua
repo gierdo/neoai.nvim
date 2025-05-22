@@ -12,17 +12,12 @@ M.get_current_output = function()
 	return table.concat(M._chunks, "")
 end
 
-local function remove_ansi_escape_codes(str)
-	return str:gsub("\27%[[%d;]*[mK]", "")
-end
-
 ---@param chunk string
 ---@param on_stdout_chunk fun(chunk: string) Function to call whenever a stdout chunk occurs
 M._recieve_chunk = function(chunk, on_stdout_chunk)
 	-- Split the input chunk by newlines
-	local cleaned_chunk = remove_ansi_escape_codes(chunk)
-	on_stdout_chunk(cleaned_chunk)
-	table.insert(M._chunks, cleaned_chunk)
+	on_stdout_chunk(chunk)
+	table.insert(M._chunks, chunk)
 end
 
 ---@param chat_history ChatHistory

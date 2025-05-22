@@ -31,11 +31,13 @@ productivity and make coding more enjoyable.
 To install NeoAI, you can use your favorite plugin manager. For example, with
 vim-plug, add the following line to your `init.vim` or `.vimrc`, note that it
 also requires the [nui](https://github.com/MunifTanjim/nui.nvim) dependency and
-curl installed on the system:
+curl installed on the system, as well as
+[`baleia`](https://github.com/m00qek/baleia.nvim) for ansi-coloured AI output:
 
 ```
 Plug 'MunifTanjim/nui.nvim'
 Plug 'gierdo/neoai.nvim'
+Plug 'm00qek/baleia.nvim'
 ```
 
 Then run `:PlugInstall` to install the plugins.
@@ -46,7 +48,8 @@ For lazy.nvim:
 return {
     "gierdo/neoai.nvim",
     dependencies = {
-        "MunifTanjim/nui.nvim",
+      "MunifTanjim/nui.nvim",
+      "m00qek/baleia.nvim",
     },
     cmd = {
         "NeoAI",
@@ -78,7 +81,10 @@ For packer:
 ```lua
 use ({
     "gierdo/neoai.nvim",
-    require = { "MunifTanjim/nui.nvim" },
+    require = {
+      "MunifTanjim/nui.nvim",
+      "m00qek/baleia.nvim",
+    },
     cmd = {
         "NeoAI",
         "NeoAIOpen",
