@@ -29,12 +29,18 @@ M.send_to_model = function(chat_history, on_stdout_chunk, on_complete)
 
 	chunks = {}
 
-	-- Execute the Amazon Q CLI command
-	utils.exec("q", {
+	local command = {}
+	command = {
 		"chat",
 		"--no-interactive",
-		messages_json,
-	}, function(chunk)
+	}
+	for _, v in ipairs(chat_history.params) do
+		table.insert(command, v)
+	end
+	table.insert(command, messages_json)
+
+	-- Execute the Amazon Q CLI command
+	utils.exec("q", command, function(chunk)
 		M._recieve_chunk(chunk, on_stdout_chunk)
 	end, function(err, _)
 		-- Clean up the temporary file
