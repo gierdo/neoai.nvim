@@ -67,6 +67,8 @@ M.create_ui = function()
 		return
 	end
 
+	chat.new_chat_history()
+
 	local current_model = chat.get_current_model()
 
 	M.output_popup = Popup({
@@ -151,8 +153,6 @@ M.create_ui = function()
 	M.input_popup:on({ event.BufDelete, event.WinClosed }, function()
 		M.destroy_ui()
 	end)
-
-	chat.new_chat_history()
 
 	local input_buffer = M.input_popup.bufnr
 	local output_buffer = M.output_popup.bufnr
